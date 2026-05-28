@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpendWise</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
+</head>
+
+<body >
+    
+    <nav class="nav">
+        <h2>SpendWise</h2>
+
+        <a href="login.html">Login</a>
+    </nav>
+    
+    <section class="home">
+        <div class="form_container">
+            <i class="uil uil-times form_close"></i>
+            <!--Login form-->
+            <div class="form login_form">
+                <form action="#">
+                    <h2>Login</h2>
+
+                    <div class="input_box">
+                        <input type="email" placeholder="Email" required>
+                        <i class="uil uil-envelope-alt email"></i>
+                    </div>
+                    <div class="input_box">
+                        <input type="password" placeholder="Password" required>
+                        <i class="uil uil-lock password"></i>
+                        <i class="uil uil-eye-slash password_hidden"></i>
+                    </div>
+
+                    <div class="option_field">
+                        <span class="checkbox">
+                            <input type="checkbox" id="check">
+                            <label for="check">Remember me</label>
+                        </span>
+                        <a href="#" class="forgot_password">Forgot password?</a>
+                    </div>
+
+                    <button class="login-button">Login Now</button>
+
+                    <div class="login_signup">
+                        Dont't have an account? <a href="#" id="signup">Sign up</a>
+                    </div>
+                </form>
+            </div>
+
+            <!--Signup form-->
+            <div class="form signup_form">
+                <form action="#">
+                    <h2>Sign up</h2>
+                    <div class="input_box">
+                        <input type="text" placeholder="Enter your name" required>
+                        <i class="uil uil-user email"></i>
+                    </div>
+                    <div class="input_box">
+                        <input type="text" placeholder="Last name (optional)">
+                        <i class="uil uil-user email"></i>
+                    </div>
+                    <div class="input_box">
+                        <input type="email" placeholder="Email" required>
+                        <i class="uil uil-envelope-alt email"></i>
+                    </div>
+                    <div class="input_box">
+                        <input type="password" placeholder="Create password" required>
+                        <i class="uil uil-lock password"></i>
+                        <i class="uil uil-eye-slash password_hidden"></i>
+                    </div>
+                    <div class="input_box">
+                        <input type="password" placeholder="Confirm password" required>
+                        <i class="uil uil-lock password"></i>
+                        <i class="uil uil-eye-slash password_hidden"></i>
+                    </div>
+
+                    <div class="option_field">
+                        <span class="checkbox">
+                            <input type="checkbox" id="check">
+                            <label for="check">Remember me</label>
+                        </span>
+                        <a href="#" class="forgot_password">Forgot password?</a>
+                    </div>
+
+                    <button class="login-button">Sign Up Now</button>
+
+                    <div class="login_signup">
+                        Already have an account? <a href="#" id="login">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script src="index.js"></script>
+</body>
+</html>
