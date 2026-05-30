@@ -59,6 +59,9 @@ body{
 .sidebar.collapsed{
     width: 90px;
 }
+.sidebar-header {
+    position: relative;
+}
 .sidebar .sidebar-header{
     display: flex;
     padding: 20px 18px;
@@ -395,10 +398,6 @@ body.dark-theme .topbar-actions {
 
     cursor: pointer;
 }
-body.dark-theme {
-    color: white;
-    background: #121212;
-}
 .topbar-row-2 {
     justify-content: flex-start;
 }
@@ -486,7 +485,10 @@ body.dark-theme {
     font-size: 0.9rem;
     color: var(--color-text-placeholder);
 }
-
+/*chart & Budget*/
+.chartsBudget-grid{
+    display: grid;
+}
 /*Bottom grid*/
 .bottom-grid {
     display: grid;

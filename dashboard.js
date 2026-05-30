@@ -3,8 +3,20 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/f
 import { signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 import { auth } from "./firebase.js";
 
+//call Firebase:
+import {
+  createUserIfNotExists,
+  getUserData,
+  saveTransactions as saveTransactionsToDB,
+  saveBudgets as saveBudgetsToDB
+} from "./firebaseDB.js";
+
 // 2. GLOBAL STATE
 let userId = null;
+const defaults = {
+    transactions: [],
+    budgets: {}
+};
 let transactions = [];
 let currentIndex = null;
 // 2. UI STATE
@@ -38,14 +50,9 @@ let monthPicker;
 const profileBtn = document.getElementById("profileBtn");
 const dropdown = document.getElementById("profileDropdown");
 
-const firstName = localStorage.getItem("firstName");
 
-const userNameEl = document.getElementById("userName");
-if (userNameEl) {
-    userNameEl.textContent = firstName
-        ? firstName.charAt(0).toUpperCase() + firstName.slice(1)
-        : "User";
-}
+
+
 
 document.getElementById("logoutBtn")?.addEventListener("click", async () => {
     await signOut(auth);
@@ -113,21 +120,44 @@ function setupUI() {
 
 
 // 3. AUTH (GATEKEEP)
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
+    //Check login
     if (!user) {
         window.location.replace("index.html");
         return;
     }
 
+    //Save UID
     userId = user.uid;
 
-    transactions =
-        JSON.parse(localStorage.getItem(`transactions_${userId}`)) || [];
+    //CREATE USER IF FIRST TIME
+    await createUserIfNotExists(user);
 
-    budgets =
-        JSON.parse(localStorage.getItem(`budgets_${userId}`)) || {};
+    //LOAD USER DATA FROM FIREBASE
+    const data = await getUserData(userId);
+    console.log("FIREBASE DATA LOADED:", data);
+    const safeData = {
+        ...defaults,
+        ...data
+    };
+    //ASSIGN DATA INTO APP STATE
+    transactions = safeData.transactions;
+    budgets = safeData.budgets;
 
+    const firstName = safeData.firstName || "User";
+
+    const userNameEl = document.getElementById("userName");
+    if (userNameEl) {
+        userNameEl.textContent = firstName
+            ? firstName.charAt(0).toUpperCase() + firstName.slice(1)
+            : "User";
+    }
+    
+    //START APP
     init();
+
+    console.log("AUTH USER:", user);
+    console.log("UID:", user?.uid);
 });
 
 function init() {
@@ -322,15 +352,17 @@ function deleteTransactions(index){
     setButtonMode();
 }
 
-function saveTransactions(){
-    localStorage.setItem(
-        `transactions_${userId}`,
-        JSON.stringify(transactions)
-    );
+
+async function saveTransactions(){
+    console.log("SAVING TRANSACTIONS:", transactions);
+    await saveTransactionsToDB(userId, transactions);
 }
-function saveBudgets() {
-    localStorage.setItem(`budgets_${userId}`, JSON.stringify(budgets));
+
+
+async function saveBudgets(){
+    await saveBudgetsToDB(userId, budgets);
 }
+
 
 function editTransactions(index){
     currentIndex = index;
@@ -897,3 +929,7 @@ window.deleteTransactions = deleteTransactions;
 window.saveSingleBudget = saveSingleBudget;
 window.resetBudget = resetBudget;
 window.setQuickMonth = setQuickMonth;
+
+window.addOrUpdateTransaction = addOrUpdateTransaction;
+window.enterFunction = enterFunction;
+window.setTypeFilter = setTypeFilter;

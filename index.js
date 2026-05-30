@@ -78,7 +78,7 @@ signupFormEl.addEventListener("submit", async (e) => {
     if (!safe(signupEmail) || !safe(signupPassword)) return;
     e.preventDefault();
 
-    const firstName = document.querySelector("#signupFirstName").value;
+    const firstName = document.querySelector("#firstName").value;
     const lastName = document.querySelector("#signupLastName").value;
 
     const email = signupEmail.value;
