@@ -1,5 +1,5 @@
 import { auth } from "./firebase.js";
-
+import { createUserIfNotExists } from "./userService.js";
 
 import {
     createUserWithEmailAndPassword,
@@ -10,8 +10,8 @@ import {
 onAuthStateChanged(auth, (user) => {
     const path = window.location.pathname;
 
-    if (path.includes("dashboard.html") && !user) {
-        window.location.replace("index.html");
+    if (path.includes("/pages/") && !user) {
+        window.location.replace("../index.html");
     }
 });
 
@@ -96,12 +96,18 @@ signupFormEl.addEventListener("submit", async (e) => {
     }
 
     try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-        localStorage.setItem("firstName", firstName);
-        localStorage.setItem("lastName", lastName);
+        await createUserIfNotExists(
+            userCredential.user,
+            firstName
+        );
 
-        window.location.href = "dashboard.html";
+        window.location.href = "pages/dashboard.html";
 
     } catch (error) {
         alert(error.message);
@@ -127,7 +133,7 @@ loginFormEl.addEventListener("submit", async (e) => {
         loginSubmitBtn.textContent = "Logging in...";
 
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "dashboard.html";
+        window.location.href = "pages/dashboard.html";
 
     } catch (error) {
         loginSubmitBtn.textContent = "Login";

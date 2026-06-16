@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>SpendWise | Budgets</title>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link href="../assets/dashboard.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <nav class="site-nav">
+            <button class="sidebar-toggle">
+                    <span class="material-symbols-rounded">
+                        menu
+                    </span>
+            </button>
+        </nav>
+        <div class="container">
+            <aside class="sidebar collapsed">
+                <!--Sidebar header-->
+                <header class="sidebar-header">
+                    <div class="sidebar-brand">
+                        <span class="material-symbols-rounded" style="color:#1a7a3a;font-size:1.6rem">savings</span>
+                        <span class="brand-text">SpendWise</span>
+                    </div>
+                    <button class="sidebar-toggle">
+                        <span class="material-symbols-rounded">
+                            chevron_left
+                        </span>
+                    </button>
+                </header>
+
+                <div class="sidebar-content">
+                    <!--search form-->
+                    <form action="#" class="search-form">
+                        <span class="material-symbols-rounded">
+                            search
+                        </span>
+                        <input type="search" placeholder="Search..." required>
+                    </form>
+                    <!--Menu list-->
+                    <ul class="menu-list">
+                        <li class="menu-item">
+                            <a href="dashboard.html" class="menu-link">
+                                <span class="material-symbols-rounded">dashboard</span>
+                                <span class="menu-label">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="transactions.html" class="menu-link ">
+                                <span class="material-symbols-rounded">receipt_long</span>
+                                <span class="menu-label">Transactions</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="goals.html" class="menu-link">
+                                <span class="material-symbols-rounded">savings</span>
+                                <span class="menu-label">Goals</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="budgets.html" class="menu-link active">
+                                <span class="material-symbols-rounded">account_balance_wallet</span>
+                                <span class="menu-label">Budgets</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="analytics.html" class="menu-link">
+                                <span class="material-symbols-rounded">analytics</span>
+                                <span class="menu-label">Analytics</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="settings.html" class="menu-link">
+                                <span class="material-symbols-rounded">settings</span>
+                                <span class="menu-label">Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!--Siderbar footer-->
+                <div class="sidebar-footer">
+                    <button id="logoutBtn" class="logout-btn">
+                        <span class="material-symbols-rounded">logout</span>
+                        <span class="logout-text">Logout</span>
+                    </button>
+                    <button class="theme-toggle">
+                        <div class="theme-label">
+                            <span class="theme-icon material-symbols-rounded">dark_mode</span>
+                            <span class="theme-text">Dark Mode</span>
+                        </div>
+                        <div class="theme-toggle-track">
+                            <div class="theme-toggle-indicator">
+
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </aside>
+            
+            <div class="main-content">
+                <!--Header-->
+                <header class="topbar">
+                    <div class="topbar-row topbar-row-1">
+                        <div class="topbar-welcome">
+                            <h1>Budgets</h1>
+                            <p>Set limits and stay on track</p>
+                        </div>
+
+                        <div class="topbar-actions">
+                            <div class="month-selector">
+                                <span class="material-symbols-rounded">calendar_month</span>
+                                <input type="month" id="monthFilter" class="month-picker">
+                            </div>
+                            <button id="notifications">
+                                <span class="material-symbols-rounded">notifications</span>
+                            </button>
+                            <button id="profileBtn" onclick="window.location.href='settings.html'">
+                                <span class="material-symbols-rounded">account_circle</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </header>
+                </header>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                    <p style="font-size:0.85rem;color:var(--color-text-secondary)">Set limits per category. Track how close you are each month.</p>
+                    <button id="openBudgetsFormBtn" class="add-primary-btn">
+                        <span class="material-symbols-rounded" style="font-size:1rem">add</span>
+                        New budget
+                    </button>
+                </div>
+                <!-- Budget FORM (hidden by default) -->
+                <section id="budgetFormContainer" class="hidden">
+
+                    <h2 id="formTitle">Add Budget</h2>
+
+                    <form id="budgetForm">
+
+                        <label for="budgetCategory">Category</label>
+                        <select id="budgetCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Education">Education</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Health">Health</option>
+                            <option value="Savings">Savings</option>
+                        </select>
+
+                        <label for="budgetLimit">Spending Limit</label>
+                        <input type="number" id="budgetLimit" placeholder="Amount" required />
+
+                        <label for="budgetMonth">Month</label>
+                        <input type="month" id="budgetMonth" required />
+
+                        <button type="button" onclick="addBudget()">Save</button>
+                        <button type="button" id="cancelBudgetFormBtn">Cancel</button>
+
+                    </form>
+
+                </section>
+                <section id="budgetsList"></section>
+
+
+        
+            </div>
+        </div>
+        <script type="module" src="../components/sidebar.js" defer></script>
+        <script type="module" src="budgets.js" defer></script>
+    </body>
+</html>

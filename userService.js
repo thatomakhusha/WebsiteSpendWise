@@ -8,14 +8,14 @@ import {
 import { db } from "./firebase.js"; //db is the first database instance
 
 //check if user exists & this runs when user logs in.
-export async function createUserIfNotExists(user, firstNameFromForm = null) {
+export async function createUserIfNotExists(user, firstNameFromForm = "") {
     //We first reference the user document:
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
         await setDoc(userRef, {
-            firstName: user.displayName || "",
+            firstName: firstNameFromForm || "",
             email: user.email || "",
             transactions: [],
             budgets: {},
@@ -36,20 +36,26 @@ export async function getUserData(uid) {
   }
 }
 
-//Save transactions (this replaces: localStorage.setItem(...))
-export async function saveTransactions(uid, transactions) {
-  const userRef = doc(db, "users", uid);
+// //Save transactions (this replaces: localStorage.setItem(...))
+// export async function saveTransactions(uid, transactions) {
+//   const userRef = doc(db, "users", uid);
 
-  await updateDoc(userRef, {
-    transactions: transactions
-  });
-}
+//   await updateDoc(userRef, {
+//     transactions: transactions
+//   });
+// }
 
-//save budgets
-export async function saveBudgets(uid, budgets) {
-  const userRef = doc(db, "users", uid);
+// //save budgets
+// export async function saveBudgets(uid, budgets) {
+//   const userRef = doc(db, "users", uid);
 
-  await updateDoc(userRef, {
-    budgets: budgets
-  });
+//   await updateDoc(userRef, {
+//     budgets: budgets
+//   });
+// }
+
+export async function saveUserData(uid, data) {
+    const userRef = doc(db, "users", uid);
+
+    await setDoc(userRef, data, { merge: true });
 }

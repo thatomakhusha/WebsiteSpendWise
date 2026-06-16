@@ -4,10 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
-            SpendWise
+            SpendWise | Dashboard
         </title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        <link href="dashboard.css" rel="stylesheet">
+        <link href="../assets/dashboard.css" rel="stylesheet">
     </head>
     <body>
         <!--Site navbar-->
@@ -23,7 +23,10 @@
             <aside class="sidebar collapsed">
                 <!--Sidebar header-->
                 <header class="sidebar-header">
-                    <img src="Logo maker project-Photoroom.png" alt ="" class="header-logo">
+                    <div class="sidebar-brand">
+                        <span class="material-symbols-rounded" style="color:#1a7a3a;font-size:1.6rem">savings</span>
+                        <span class="brand-text">SpendWise</span>
+                    </div>
                     <button class="sidebar-toggle">
                         <span class="material-symbols-rounded">
                             chevron_left
@@ -42,31 +45,37 @@
                     <!--Menu list-->
                     <ul class="menu-list">
                         <li class="menu-item">
-                            <a href="#" class="menu-link active">
+                            <a href="dashboard.html" class="menu-link active">
                                 <span class="material-symbols-rounded">dashboard</span>
                                 <span class="menu-label">Dashboard</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="#" class="menu-link ">
+                            <a href="transactions.html" class="menu-link ">
                                 <span class="material-symbols-rounded">receipt_long</span>
                                 <span class="menu-label">Transactions</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="#" class="menu-link">
-                                <span class="material-symbols-rounded">analytics</span>
-                                <span class="menu-label">Analytics</span>
+                            <a href="goals.html" class="menu-link">
+                                <span class="material-symbols-rounded">savings</span>
+                                <span class="menu-label">Goals</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="#" class="menu-link">
+                            <a href="budgets.html" class="menu-link">
                                 <span class="material-symbols-rounded">account_balance_wallet</span>
                                 <span class="menu-label">Budgets</span>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="#" class="menu-link">
+                            <a href="analytics.html" class="menu-link">
+                                <span class="material-symbols-rounded">analytics</span>
+                                <span class="menu-label">Analytics</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="settings.html" class="menu-link">
                                 <span class="material-symbols-rounded">settings</span>
                                 <span class="menu-label">Settings</span>
                             </a>
@@ -76,6 +85,10 @@
 
                 <!--Siderbar footer-->
                 <div class="sidebar-footer">
+                    <button id="logoutBtn" class="logout-btn">
+                        <span class="material-symbols-rounded">logout</span>
+                        <span class="logout-text">Logout</span>
+                    </button>
                     <button class="theme-toggle">
                         <div class="theme-label">
                             <span class="theme-icon material-symbols-rounded">dark_mode</span>
@@ -98,28 +111,20 @@
                         </div>
 
                         <div class="topbar-actions">
+                            <div class="month-selector">
+                                <span class="material-symbols-rounded">calendar_month</span>
+                                <input type="month" class="month-picker">
+                            </div>
+                            <div class="quick-month-buttons">
+                                <button class="quick-this">This Month</button>
+                                <button class="quick-last">Last Month</button>
+                            </div>
                             <button id="notifications">
                                 <span class="material-symbols-rounded">notifications</span>
                             </button>
-                            <button id="profileBtn">
+                            <button id="profileBtn" onclick="window.location.href='settings.html'">
                                 <span class="material-symbols-rounded">account_circle</span>
                             </button>
-
-                            <div id="profileDropdown" class="dropdown hidden">
-                                <p id="profileBtnNav">Profile</p>
-                                <p>Settings</p>
-                                <p id="logoutBtn">Logout</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="topbar-row topbar-row-2">
-                        <div class="month-selector">
-                            <span class="material-symbols-rounded">calendar_month</span>
-                            <input type="month" class="month-picker">
-                        </div>
-                        <div class="quick-month-buttons">
-                            <button onclick="setQuickMonth('THIS')">This Month</button>
-                            <button onclick="setQuickMonth('LAST')">Last Month</button>
                         </div>
                     </div>
                     
@@ -131,7 +136,9 @@
                     <div class="stat-card">
                         <div class="card-header">
                             <p>Total Balance</p>
-                            <span>💰</span>
+                            <button onclick="window.location.href='transactions.html'" class="card-nav-btn">
+                                <span class="material-symbols-rounded">arrow_outward</span>
+                            </button>
                         </div>
 
                         <h2 class="balance-value">R0</h2>
@@ -145,10 +152,12 @@
                     <div class="stat-card">
                         <div class="card-header">
                             <p>Total Income</p>
-                            <span>📈</span>
+                            <button onclick="window.location.href='transactions.html'" class="card-nav-btn">
+                                <span class="material-symbols-rounded">arrow_outward</span>
+                            </button>
                         </div>
 
-                        <h2 class="income-value">R0</h2>
+                        <h2 class="income-value" style="color:#1a7a3a">R0</h2>
 
                         <p class="card-change">
                             Monthly income
@@ -159,10 +168,12 @@
                     <div class="stat-card">
                         <div class="card-header">
                             <p>Total Expenses</p>
-                            <span>📉</span>
+                            <button onclick="window.location.href='transactions.html'" class="card-nav-btn">
+                                <span class="material-symbols-rounded">arrow_outward</span>
+                            </button>
                         </div>
 
-                        <h2 class="expense-value">R0</h2>
+                        <h2 class="expense-value" style="color:#c0392b">R0</h2>
 
                         <p class="card-change">
                             Monthly expenses
@@ -173,7 +184,9 @@
                     <div class="stat-card">
                         <div class="card-header">
                             <p>Savings</p>
-                            <span>🏦</span>
+                            <button onclick="window.location.href='transactions.html'" class="card-nav-btn">
+                                <span class="material-symbols-rounded">arrow_outward</span>
+                            </button>
                         </div>
 
                         <h2 class="savings-value">R0</h2>
@@ -184,12 +197,32 @@
                     </div>
 
                 </section>
+                
                 <section class="chartsBudget-grid">
                     <div class="chart-card">
+                        <div class="recent-header">
+                            <h3>Income vs expenses</h3>
+                            <button class="section-nav-btn" onclick="window.location.href='analytics.html'">
+                                <span class="material-symbols-rounded" style="font-size:14px">analytics</span>
+                                Full analytics
+                            </button>
+                        </div>
                         <canvas id="expenseChart"></canvas>
                     </div>
 
-                    <div class="chart-card">
+                    <div class="chart-card budget-snapshot">
+                        <div class="recent-header">
+                            <h3>Budget Snapshot</h3>
+                            <button class="section-nav-btn" onclick="window.location.href='budgets.html'">
+                                View all budgets
+                                <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span>
+                            </button>
+                        </div>
+                        
+
+                        <div class="budget-preview">
+                            Loading budgets...
+                        </div>
                     </div>
                 </section>
                 <section class="bottom-grid">
@@ -198,17 +231,21 @@
                             <h3>Recent Transactions</h3>
 
                             <div class="recent-toggle">
-                                <button onclick="">See all</button>
+                                <button class="section-nav-btn" onclick="window.location.href='transactions.html'">
+                                    See all
+                                    <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span>
+                                </button>
                             </div>
                         </div>
                         <div class="table-card">
                             <table class="transactions-table">
                                 <thead class="transactions-header">
                                     <tr>
+                                        <th></th>
+                                        <th>Description</th>
+                                        <th>Category</th>
                                         <th>Date</th>
                                         <th>Amount</th>
-                                        <th>Transaction Name</th>
-                                        <th>Category</th>
                                     </tr>
                                 </thead>
                                 <tbody class="recent-transactions-body"></tbody>
@@ -216,72 +253,29 @@
                         </div>
                     </div>
                     <div class="savings-goals">
-
+                        <div class="goal-card">
+                            <div class="recent-header">
+                                <h3>Savings Goals</h3>
+                                <button class="section-nav-btn" onclick="window.location.href='goals.html'">
+                                    View all
+                                    <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span>
+                                </button>
+                            </div>
+                            <div class="goals-preview"></div>
+                        </div>
                     </div>
                     
                     
                 </section>
                 
-                 <!--1. INPUT -->
-                <select class="type-el">
-                    <option value="">Select transaction</option>
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
-                <select class="income-category-el" hidden>
-                    <option value="">Select income category</option>
-                    <option value="Salary">Salary</option>
-                    <option value="Allowance">Allowance</option>
-                    <option value="Freelance">Freelance</option>
-                    <option value="Business">Business</option>
-                    <option value="Investments">Investments</option>
-                    <option value="Dividends">Dividends</option>
-                </select>
-                <select class="expense-category-el" hidden>
-                    <option value="">Select expense category</option>
-                    <option value="Food">Food</option>
-                    <option value="Transport">Transport</option>
-                    <option value="Rent">Rent</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="Utilities">Utilities</option>
-                    <option value="Education">Education</option>
-                    <option value="Shopping">Shopping</option>
-                    <option value="Health">Health</option>
-                    <option value="Savings">Savings</option>
-                </select>
-
-                <input class="expName" placeholder="Enter expense name" >
-                <input class="expAmount"  placeholder="Enter expense amount" onkeydown="
-                    enterFunction(event);
-                ">
-                <input type="date" class="date-el">
-                <button onclick="addOrUpdateTransaction()" class="submit-btn">add</button>
-
-                <!--2. FILTERS -->
-                <div class="month-buttons"></div>
-                <p>
-                    <button onclick="setTypeFilter('All')">All</button>
-                    <button onclick="setTypeFilter('Income')">Income</button>
-                    <button onclick="setTypeFilter('Expense')">Expense</button>
-                </p>
-                <div class="category-buttons"></div>
-
-                
-                 <!--3. LIST -->
-                <p class="expense-el"></p>
-
-                <!--4. DASHBOARD -->
-                <p class="total-el"></p>
-                <div class="category-totals"></div>
-                <div class="budget-overview"></div>
-                <div class="analytics"></div>
+                 
 
                 
             </div>
         </div>
-        
-
-        <script type="module" src="dashboard.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script type="module" src="../components/sidebar.js" defer></script>
+        <script type="module" src="dashboard.js" defer></script>
+        
     </body>
 </html>
