@@ -37,11 +37,14 @@ export function renderBudgets(listEl, budgets, spending = {}) {
         const div = document.createElement("div");
         div.classList.add("budgets-card");
         div.innerHTML = `
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
                 <div style="width:36px;height:36px;border-radius:10px;background:${icon.color};display:flex;align-items:center;justify-content:center;flex-shrink:0">
                     <span class="material-symbols-rounded" style="font-size:18px;color:${icon.iconColor}">${icon.icon}</span>
                 </div>
-                <strong style="font-size:1rem">${bx.category}</strong>
+                <div>
+                    <strong style="font-size:1rem">${bx.category}</strong>
+                    <div style="font-size:0.75rem;color:var(--color-text-secondary)">${bx.month}</div>
+                </div>
             </div>
             <div style="background:var(--color-border-hr);border-radius:4px;height:7px;margin-bottom:8px">
                 <div style="width:${percent}%;background:${barColor};height:7px;border-radius:4px;transition:width 0.3s"></div>

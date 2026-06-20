@@ -111,9 +111,9 @@
                         </div>
 
                         <div class="topbar-actions">
-                            <div class="month-selector">
+                            <div class="month-selector" onclick="document.getElementById('monthFilter').showPicker()">
                                 <span class="material-symbols-rounded">calendar_month</span>
-                                <input type="month" id="monthFilter" class="month-picker">
+                                <input type="month" id="monthFilter" style="width:0;height:0;opacity:0;position:absolute;pointer-events:none">
                             </div>
                             <button id="notifications">
                                 <span class="material-symbols-rounded">notifications</span>

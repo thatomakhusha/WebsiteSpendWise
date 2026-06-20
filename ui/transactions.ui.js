@@ -6,6 +6,49 @@ export function renderTransactions(listEl, transactions) {
         return;
     }
 
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+        transactions.forEach(tx => {
+            const isIncome = tx.type === "income";
+            const card = document.createElement("div");
+            card.style.cssText = `
+                background:var(--color-bg-card);
+                border:1px solid var(--color-border-hr);
+                border-radius:12px;
+                padding:14px;
+                margin-bottom:10px;
+                display:flex;
+                flex-direction:column;
+                gap:8px;
+            `;
+            card.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div style="display:flex;align-items:center;gap:10px">
+                        <div style="width:34px;height:34px;border-radius:50%;background:${isIncome ? '#e8f5ec' : '#fdf0ee'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                            <span class="material-symbols-rounded" style="font-size:16px;color:${isIncome ? '#1a7a3a' : '#c0392b'}">${isIncome ? 'arrow_downward' : 'arrow_upward'}</span>
+                        </div>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem">${tx.description}</div>
+                            <div style="font-size:0.75rem;color:var(--color-text-secondary)">${tx.category} • ${tx.date}</div>
+                        </div>
+                    </div>
+                    <div style="font-weight:700;font-size:1rem;color:${isIncome ? '#1a7a3a' : '#c0392b'}">${isIncome ? '+' : '-'}R${tx.amount}</div>
+                </div>
+                <div style="display:flex;gap:6px;justify-content:flex-end">
+                    <button onclick="editTransaction('${tx.id}')" style="background:var(--color-hover-secondary);border:1px solid var(--color-border-hr);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.78rem;color:var(--color-text-primary);font-family:Poppins,sans-serif">
+                        <span class="material-symbols-rounded" style="font-size:13px;vertical-align:middle">edit</span> Edit
+                    </button>
+                    <button onclick="deleteTransaction('${tx.id}')" style="background:#fdf0ee;border:1px solid #f5c6c0;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.78rem;color:#c0392b;font-family:Poppins,sans-serif">
+                        <span class="material-symbols-rounded" style="font-size:13px;vertical-align:middle">delete</span> Delete
+                    </button>
+                </div>
+            `;
+            listEl.appendChild(card);
+        });
+        return;
+    }
+
     const table = document.createElement("table");
     table.className = "transactions-table";
     table.style.width = "100%";

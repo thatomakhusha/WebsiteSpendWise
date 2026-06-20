@@ -204,47 +204,81 @@ function renderStatsCards() {
 // 8. RECENT TRANSACTIONS (TOP 3)
 // ===============================
 function renderRecentTransactions() {
-  const body = document.querySelector(".recent-transactions-body");
+    const body = document.querySelector(".recent-transactions-body");
+    const tableWrapper = document.querySelector(".table-card");
+    const mobileList = document.querySelector(".recent-transactions-mobile");
+    
+    if (!body && !mobileList) return;
 
-  if (!body) return;
+    const filtered = getFilteredRaw();
+    const sorted = [...filtered].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+    const recent = sorted.slice(0, 3);
 
-  const filtered = getFilteredRaw();
+    const isMobile = window.innerWidth <= 768;
 
-  const sorted = [...filtered].sort(
-    (a, b) => new Date(b.date || 0) - new Date(a.date || 0)
-  );
+    if (isMobile) {
+        const container = document.querySelector(".recent-transactions");
+        const existing = container.querySelector(".recent-mobile-list");
+        if (existing) existing.remove();
+        if (tableWrapper) tableWrapper.style.display = "none";
 
-  const recent = sorted.slice(0, 3);
+        const mobileDiv = document.createElement("div");
+        mobileDiv.className = "recent-mobile-list";
 
-  body.innerHTML = "";
+        if (recent.length === 0) {
+            mobileDiv.innerHTML = `<p style="color:var(--color-text-secondary);font-size:0.875rem">No transactions this month.</p>`;
+        } else {
+            recent.forEach(t => {
+                const isIncome = t.type === "income";
+                mobileDiv.innerHTML += `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-border-hr)">
+                        <div style="display:flex;align-items:center;gap:10px">
+                            <div style="width:32px;height:32px;border-radius:50%;background:${isIncome ? '#e8f5ec' : '#fdf0ee'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                                <span class="material-symbols-rounded" style="font-size:15px;color:${isIncome ? '#1a7a3a' : '#c0392b'}">${isIncome ? 'arrow_downward' : 'arrow_upward'}</span>
+                            </div>
+                            <div>
+                                <div style="font-weight:500;font-size:0.875rem">${t.description}</div>
+                                <div style="font-size:0.75rem;color:var(--color-text-secondary)">${t.category} • ${t.date}</div>
+                            </div>
+                        </div>
+                        <div style="font-weight:600;color:${isIncome ? '#1a7a3a' : '#c0392b'}">${isIncome ? '+' : '-'}R${t.amount}</div>
+                    </div>
+                `;
+            });
+        }
 
-  if (recent.length === 0) {
-    body.innerHTML = `
-      <tr>
-        <td colspan="4">No transactions for this month</td>
-      </tr>
-    `;
-    return;
-  }
+        container.appendChild(mobileDiv);
+        return;
+    }
 
-  recent.forEach(t => {
-    const isIncome = t.type === "income";
-    body.innerHTML += `
-        <tr>
-            <td>
-                <div style="width:32px;height:32px;border-radius:50%;background:${isIncome ? '#e8f5ec' : '#fdf0ee'};display:flex;align-items:center;justify-content:center;">
-                    <span class="material-symbols-rounded" style="font-size:16px;color:${isIncome ? '#1a7a3a' : '#c0392b'}">
-                        ${isIncome ? 'arrow_downward' : 'arrow_upward'}
-                    </span>
-                </div>
-            </td>
-            <td>${t.description}</td>
-            <td><span style="background:var(--color-hover-secondary);padding:3px 10px;border-radius:20px;font-size:0.75rem">${t.category}</span></td>
-            <td style="font-size:0.78rem;color:var(--color-text-primary)">${t.date}</td>
-            <td style="color:${isIncome ? '#1a7a3a' : '#c0392b'};font-weight:600">${isIncome ? '+' : '-'}R${t.amount}</td>
-        </tr>
-    `;
-  });
+    if (tableWrapper) tableWrapper.style.display = "";
+    const existing = document.querySelector(".recent-mobile-list");
+    if (existing) existing.remove();
+
+    if (!body) return;
+    body.innerHTML = "";
+
+    if (recent.length === 0) {
+        body.innerHTML = `<tr><td colspan="5" style="color:var(--color-text-secondary);font-size:0.875rem;padding:16px">No transactions for this month</td></tr>`;
+        return;
+    }
+
+    recent.forEach(t => {
+        const isIncome = t.type === "income";
+        body.innerHTML += `
+            <tr>
+                <td>
+                    <div style="width:32px;height:32px;border-radius:50%;background:${isIncome ? '#e8f5ec' : '#fdf0ee'};display:flex;align-items:center;justify-content:center;">
+                        <span class="material-symbols-rounded" style="font-size:16px;color:${isIncome ? '#1a7a3a' : '#c0392b'}">${isIncome ? 'arrow_downward' : 'arrow_upward'}</span>
+                    </div>
+                </td>
+                <td>${t.description}</td>
+                <td><span style="background:var(--color-hover-secondary);padding:3px 10px;border-radius:20px;font-size:0.75rem;color:var(--color-text-primary)">${t.category}</span></td>
+                <td style="font-size:0.78rem;color:var(--color-text-secondary)">${t.date}</td>
+                <td style="color:${isIncome ? '#1a7a3a' : '#c0392b'};font-weight:600">${isIncome ? '+' : '-'}R${t.amount}</td>
+            </tr>
+        `;
+    });
 }
 // ===============================
 // 9. CHART
@@ -434,10 +468,15 @@ function getMonthKey(date) {
 }
 
 function setText(selector, value) {
-  const el = document.querySelector(selector);
-  if (el) el.textContent = `R${value}`;
+    const el = document.querySelector(selector);
+    if (el) {
+        el.textContent = `R${value}`;
+        el.classList.remove("skeleton");
+        el.style.width = "";
+        el.style.height = "";
+        el.style.display = "";
+    }
 }
-
 
 // ===============================
 // 12. GLOBAL EXPORTS (ONLY WHAT DASHBOARD NEEDS)

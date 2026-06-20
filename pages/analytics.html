@@ -93,9 +93,9 @@
                             <p>Understand your spending habits.</p>
                         </div>
                         <div class="topbar-actions">
-                            <div class="month-selector">
+                            <div class="month-selector" onclick="this.querySelector('.month-picker').showPicker()">
                                 <span class="material-symbols-rounded">calendar_month</span>
-                                <input type="month" class="month-picker">
+                                <input type="month" class="month-picker" style="width:0;height:0;opacity:0;position:absolute;pointer-events:none">
                             </div>
                             <div class="quick-month-buttons">
                                 <button class="quick-this">This Month</button>

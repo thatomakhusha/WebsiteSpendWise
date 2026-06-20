@@ -51,8 +51,12 @@ body {
     padding: 24px 28px;
     background: var(--color-bg-primary);
     min-height: 100vh;
+    animation: fadeIn 0.3s ease;
 }
-
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 /* ===== SIDEBAR ===== */
 .sidebar {
     position: sticky;
@@ -435,7 +439,6 @@ body.dark-theme .theme-toggle-track .theme-toggle-indicator { transform: transla
     justify-content: flex-start;
     gap: 8px;
 }
-
 .month-selector {
     display: flex;
     align-items: center;
@@ -444,6 +447,7 @@ body.dark-theme .theme-toggle-track .theme-toggle-indicator { transform: transla
     padding: 6px 12px;
     border-radius: 20px;
     border: 1px solid var(--color-border-hr);
+    width: fit-content; 
 }
 
 .month-picker {
@@ -1072,7 +1076,36 @@ tbody .cat-pill {
     pointer-events: none;
     transition: all 0.2s ease;
 }
-/* ===== RESPONSIVE ===== */
+
+.skeleton {
+    background: linear-gradient(90deg, var(--color-border-hr) 25%, var(--color-hover-secondary) 50%, var(--color-border-hr) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+    color: transparent !important;
+}
+.settings-row input {
+    width: 100%;
+}
+.settings-row input[type="password"],
+.settings-row input[type="text"] {
+    padding-right: 36px;
+}
+.settings-row div input {
+    width: 100%;
+}
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+input[type="date"],
+input[type="month"] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 130px;
+}
+
 @media (max-width: 1024px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1136,12 +1169,19 @@ tbody .cat-pill {
         gap: 6px;
     }
 
+    /* Month selector — keep visible but overlay input invisibly */
     .month-selector {
+        padding: 6px 8px;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .quick-month-buttons button span {
         display: none;
     }
 
-    .quick-month-buttons {
-        display: none;
+    .quick-month-buttons button {
+        padding: 6px 10px;
     }
 
     .transaction-filters {
@@ -1175,11 +1215,6 @@ tbody .cat-pill {
         justify-content: center;
     }
 
-    .transactions-table th:nth-child(4),
-    .transactions-table td:nth-child(4) {
-        display: none;
-    }
-
     .recent-header {
         flex-wrap: wrap;
         gap: 8px;
@@ -1202,12 +1237,5 @@ tbody .cat-pill {
 
     .topbar-welcome h1 {
         font-size: 1rem;
-    }
-
-    .transactions-table th:nth-child(3),
-    .transactions-table td:nth-child(3),
-    .transactions-table th:nth-child(5),
-    .transactions-table td:nth-child(5) {
-        display: none;
     }
 }

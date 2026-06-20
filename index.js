@@ -110,7 +110,7 @@ signupFormEl.addEventListener("submit", async (e) => {
         window.location.href = "pages/dashboard.html";
 
     } catch (error) {
-        alert(error.message);
+        showAuthError("emailErrorSignup", error.message);
     }
 });
 }
@@ -135,13 +135,21 @@ loginFormEl.addEventListener("submit", async (e) => {
         await signInWithEmailAndPassword(auth, email, password);
         window.location.href = "pages/dashboard.html";
 
-    } catch (error) {
-        loginSubmitBtn.textContent = "Login";
+    }  catch (error) {
+        loginSubmitBtn.textContent = "Login Now";
         loginSubmitBtn.disabled = false;
         loginSubmitBtn.blur();
-        alert(error.message);
+        showAuthError("passwordError", "Incorrect email or password.");
     }
 });
+}
+
+function showAuthError(elementId, message) {
+    const el = document.getElementById(elementId);
+    if (el) {
+        el.textContent = message;
+        setTimeout(() => el.textContent = "", 4000);
+    }
 }
 // OPEN MODAL + BLUR
 if (formOpenBtn) {
@@ -365,3 +373,21 @@ function resetAuthUI() {
 }
 
 updateValidationUI();
+
+const tryDemoBtn = document.getElementById("tryDemoBtn");
+
+if (tryDemoBtn) {
+    tryDemoBtn.addEventListener("click", async () => {
+        tryDemoBtn.textContent = "Loading demo...";
+        tryDemoBtn.disabled = true;
+
+        try {
+            await signInWithEmailAndPassword(auth, "demo@spendwise.app", "Demo@1234");
+            window.location.href = "pages/dashboard.html";
+        } catch (error) {
+            tryDemoBtn.textContent = "Try Demo";
+            tryDemoBtn.disabled = false;
+            showAuthError("passwordError", "Demo unavailable. Please try again.");
+        }
+    });
+}

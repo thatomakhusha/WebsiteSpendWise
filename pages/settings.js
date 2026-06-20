@@ -118,33 +118,41 @@ onAuthStateChanged(auth, async (user) => {
         }
     });
 
-    deleteAccountBtn.addEventListener("click", async () => {
-        const confirmed = window.confirm("Are you sure? This will permanently delete your account and ALL your data.");
-        if (!confirmed) return;
+    const deleteConfirmBox = document.getElementById("deleteConfirmBox");
+    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+    const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 
+    deleteAccountBtn.addEventListener("click", () => {
+        deleteConfirmBox.classList.remove("hidden");
+    });
+
+    cancelDeleteBtn.addEventListener("click", () => {
+        deleteConfirmBox.classList.add("hidden");
+    });
+
+    confirmDeleteBtn.addEventListener("click", async () => {
         const currentPassword = currentPasswordEl.value;
         if (!currentPassword) {
-            showToast("Please enter your current password to confirm deletion.", "error");
+            showToast("Please enter your current password.", "error");
             return;
         }
 
         try {
             const credential = EmailAuthProvider.credential(user.email, currentPassword);
             await reauthenticateWithCredential(user, credential);
-
             await deleteSubcollection(userId, "transactions");
             await deleteSubcollection(userId, "budgets");
             await deleteSubcollection(userId, "goals");
             await deleteDoc(doc(db, "users", userId));
             await deleteUser(user);
-
-            window.location.replace("index.html");
+            window.location.replace("../index.html");
         } catch (err) {
             if (err.code === "auth/wrong-password") {
                 showToast("Incorrect password.", "error");
             } else {
                 showToast("Error deleting account. Please try again.", "error");
             }
+            deleteConfirmBox.classList.add("hidden");
         }
     });
 });
@@ -154,4 +162,15 @@ async function deleteSubcollection(userId, subcollection) {
     const snap = await getDocs(ref);
     const deletes = snap.docs.map(d => deleteDoc(d.ref));
     await Promise.all(deletes);
+}
+
+window.togglePassword = function(inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "visibility";
+    } else {
+        input.type = "password";
+        icon.textContent = "visibility_off";
+    }
 }

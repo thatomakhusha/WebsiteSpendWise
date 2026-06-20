@@ -141,15 +141,26 @@
                         </div>
                         <div class="settings-row">
                             <label>Current Password</label>
-                            <input type="password" id="currentPassword" placeholder="Current password"/>
+                            <div style="position:relative;width:100%">
+                                <input type="password" id="currentPassword" placeholder="Current password"/>
+                                <span class="material-symbols-rounded" onclick="togglePassword('currentPassword', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--color-text-secondary);font-size:1.1rem;user-select:none">visibility_off</span>
+                            </div>
                         </div>
+
                         <div class="settings-row">
                             <label>New Password</label>
-                            <input type="password" id="newPassword" placeholder="New password"/>
+                            <div style="position:relative;width:100%">
+                                <input type="password" id="newPassword" placeholder="New password"/>
+                                <span class="material-symbols-rounded" onclick="togglePassword('newPassword', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--color-text-secondary);font-size:1.1rem;user-select:none">visibility_off</span>
+                            </div>
                         </div>
+
                         <div class="settings-row">
                             <label>Confirm Password</label>
-                            <input type="password" id="confirmPassword" placeholder="Confirm password"/>
+                            <div style="position:relative;width:100%">
+                                <input type="password" id="confirmPassword" placeholder="Confirm password"/>
+                                <span class="material-symbols-rounded" onclick="togglePassword('confirmPassword', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--color-text-secondary);font-size:1.1rem;user-select:none">visibility_off</span>
+                            </div>
                         </div>
                         <div class="settings-row">
                             <button id="savePasswordBtn" class="add-primary-btn">Update password</button>
@@ -185,6 +196,11 @@
                                 <p style="font-size:0.78rem;color:var(--color-text-secondary)">This will permanently delete your account and all data.</p>
                             </div>
                             <button id="deleteAccountBtn" class="danger-btn">Delete account</button>
+                        </div>
+                        <div id="deleteConfirmBox" class="hidden" style="margin-top:12px;padding:12px;background:#fdf0ee;border:1px solid #f5c6c0;border-radius:8px">
+                            <p style="font-size:0.85rem;color:#c0392b;margin-bottom:10px">Are you sure? This cannot be undone.</p>
+                            <button id="confirmDeleteBtn" class="danger-btn">Yes, delete my account</button>
+                            <button id="cancelDeleteBtn" style="margin-left:8px;padding:8px 16px;border-radius:8px;border:1px solid var(--color-border-hr);background:var(--color-bg-card);color:var(--color-text-primary);cursor:pointer;font-family:Poppins,sans-serif;font-size:0.875rem">Cancel</button>
                         </div>
                     </div>
 
